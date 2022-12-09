@@ -56,4 +56,4 @@ export const run = (input) => {
   ];
 };
 
-export const samples = ["09s", "09s2"];
+export const samples = ["s", "s2"];

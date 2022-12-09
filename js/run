@@ -1,6 +1,7 @@
 #!/usr/bin/env -S deno run --allow-net --allow-read --allow-write
 
 const day = `0${Deno.args[0]}`.slice(-2);
+const inputFilename = `${day}.txt`;
 const { run, samples } = await import(`./${day}.js`);
 
 const measure = async (filename, isSample = false) => {
@@ -12,23 +13,22 @@ const measure = async (filename, isSample = false) => {
 
   if (!result) return;
   const [p1, p2] = result;
-
   console.log(`${filename}: ${performance.measure("", "start", "end").duration}ms`);
   console.log(`Part 1: ${p1}`);
   console.log(`Part 2: ${p2}`);
 };
 
 try {
-  await Deno.stat(`${day}.txt`);
+  await Deno.stat(inputFilename);
 } catch (error) {
   const session = await Deno.readTextFile("session");
   const response = await fetch(`https://adventofcode.com/2022/day/${Number(day)}/input`, {
     headers: new Headers({cookie: `session=${session.trim()}`}),
   });
   const text = await response.text();
-  await Deno.writeTextFile(`${day}.txt`, text);
+  await Deno.writeTextFile(inputFilename, text);
 }
-for (let sample of (samples || [`${day}s`])) {
-  await measure(`${sample}.txt`, true);
+for (let sample of (samples || ["s"])) {
+  await measure(`${day}${sample}.txt`, true);
 }
-await measure(`${day}.txt`);
+await measure(inputFilename);
