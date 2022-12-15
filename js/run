@@ -2,21 +2,6 @@
 
 const day = `0${Deno.args[0]}`.slice(-2);
 const inputFilename = `${day}.txt`;
-const { run, samples } = await import(`./${day}.js`);
-
-const measure = async (filename, isSample = false) => {
-  const input = await Deno.readTextFile(filename);
-
-  performance.mark("start");
-  const result = await run(input, isSample);
-  performance.mark("end");
-
-  if (!result) return;
-  const [p1, p2] = result;
-  console.log(`${filename}: ${performance.measure("", "start", "end").duration}ms`);
-  console.log("Part 1", p1);
-  console.log("Part 2", p2);
-};
 
 try {
   await Deno.stat(inputFilename);
@@ -33,6 +18,21 @@ try {
   const text = await response.text();
   await Deno.writeTextFile(inputFilename, text);
 }
+
+const { run, samples } = await import(`./${day}.js`);
+const measure = async (filename, isSample = false) => {
+  const input = await Deno.readTextFile(filename);
+
+  performance.mark("start");
+  const result = await run(input, isSample);
+  performance.mark("end");
+
+  if (!result) return;
+  const [p1, p2] = result;
+  console.log(`${filename}: ${performance.measure("", "start", "end").duration}ms`);
+  console.log("Part 1:", p1);
+  console.log("Part 2:", p2);
+};
 
 for (let sample of (samples || ["s"])) {
   await measure(`${day}${sample}.txt`, true);

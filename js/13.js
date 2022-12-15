@@ -6,12 +6,6 @@ export const run = (input) => {
     }
     return groups;
   };
-  Array.prototype.product = function() {
-    return this.reduce((agg, num) => agg * num, 1);
-  };
-  Array.prototype.sum = function() {
-    return this.reduce((agg, num) => agg + num, 0);
-  };
 
   const packets = input
     .split("\n")
@@ -24,12 +18,8 @@ export const run = (input) => {
       let diff;
       if (Number.isInteger(left[i]) && Number.isInteger(right[i])) {
         diff = left[i] - right[i];
-      } else if (Number.isInteger(left[i])) {
-        diff = check([left[i]], right[i]);
-      } else if (Number.isInteger(right[i])) {
-        diff = check(left[i], [right[i]]);
       } else {
-        diff = check(left[i], right[i]);
+        diff = check([].concat(left[i]), [].concat(right[i]));
       }
       if (diff !== 0) return diff;
       i++;
@@ -40,15 +30,13 @@ export const run = (input) => {
   return [
     packets
       .group(2)
-      .map(([left, right], i) => {
-        return check(left, right) < 0 ? i + 1 : 0;
-      })
-      .sum(),
+      .reduce((agg, [left, right], i) => {
+        return agg + (check(left, right) < 0 ? i + 1 : 0);
+      }, 0),
     [[[2]], [[6]], ...packets]
       .sort(check)
-      .map((packet, i) => {
-        return ["[[2]]", "[[6]]"].includes(JSON.stringify(packet)) ? i + 1 : 1;
-      })
-      .product(),
+      .reduce((agg, packet, i) => {
+        return agg * (["[[2]]", "[[6]]"].includes(JSON.stringify(packet)) ? i + 1 : 1);
+      }, 1),
   ];
 };
