@@ -5,7 +5,6 @@ const inputFilename = `${day}.txt`;
 let input;
 
 try {
-  await Deno.stat(inputFilename);
   input = await Deno.readTextFile(inputFilename);
 } catch (error) {
   const session = await Deno.readTextFile("session");
@@ -27,8 +26,8 @@ const measure = async (input, isSample = false) => {
   performance.mark("start");
   const result = await run(input, isSample);
   performance.mark("end");
-
   if (!result) return;
+
   const [p1, p2] = result;
   console.log(performance.measure("", "start", "end").duration, "ms");
   console.log("Part 1:", p1);
