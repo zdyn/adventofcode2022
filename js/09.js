@@ -15,22 +15,22 @@ export const run = (input) => {
   }
   for (let [dir, num] of moves) {
     for (let i = 0; i < num; i++) {
+      let prev = knots[0];
+
       switch (dir) {
         case "R":
-          knots[0][0]++;
+          prev[0]++;
           break;
         case "L":
-          knots[0][0]--;
+          prev[0]--;
           break;
         case "U":
-          knots[0][1]++;
+          prev[1]++;
           break;
         case "D":
-          knots[0][1]--;
+          prev[1]--;
           break;
       }
-
-      let prev = knots[0];
       for (let next of knots.slice(1)) {
         if (Math.abs(next[0] - prev[0]) > 1 && Math.abs(next[1] - prev[1]) > 1) {
           next[0] += prev[0] > next[0] ? 1 : -1;
@@ -56,4 +56,21 @@ export const run = (input) => {
   ];
 };
 
-export const samples = ["s", "s2"];
+export const samples = [
+`R 4
+U 4
+L 3
+D 1
+R 4
+D 1
+L 5
+R 2`,
+`R 5
+U 8
+L 8
+D 3
+R 17
+D 10
+L 25
+U 20`
+];

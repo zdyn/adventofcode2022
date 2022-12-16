@@ -13,3 +13,5 @@ export const run = (input) => {
     find(14),
   ];
 };
+
+export const samples = `mjqjpqmgbljsphdztnvjfqwrcgsmlb`;

@@ -1,7 +1,6 @@
 export const run = (input) => {
   let start;
   let end;
-
   const as = [];
   const letters = "abcdefghijklmnopqrstuvwxyz"
     .split("")
@@ -25,18 +24,21 @@ export const run = (input) => {
       });
       return row;
     });
-
   const distances = {[end.join(",")]: 0};
+
   let queue = [end];
   while (queue.length > 0) {
     const next = [];
+
     for (let [x, y] of queue) {
       const key = `${x},${y}`;
       const distance = distances[key] + 1;
+
       for (let [xDiff, yDiff] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) {
         const x2 = x + xDiff;
         const y2 = y + yDiff;
         const key2 = `${x2},${y2}`;
+
         if (
           x2 < 0 || y2 < 0 || x2 >= matrix.length || y2 >= matrix[x2].length ||
           letters[matrix[x2][y2]] - letters[matrix[x][y]] < -1 ||
@@ -58,3 +60,9 @@ export const run = (input) => {
     }, Number.MAX_SAFE_INTEGER),
   ];
 };
+
+export const samples = `Sabqponm
+abcryxxl
+accszExk
+acctuvwj
+abdefghi`;

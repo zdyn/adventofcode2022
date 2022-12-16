@@ -26,10 +26,14 @@ export const run = (input) => {
     "C Z": 7,
   };
 
-  const rows = input.trim().split("\n");
+  const strategies = input.trim().split("\n");
 
   return [
-    rows.map((text) => POINT_MAP_1[text]).sum(),
-    rows.map((text) => POINT_MAP_2[text]).sum(),
+    strategies.map((text) => POINT_MAP_1[text]).sum(),
+    strategies.map((text) => POINT_MAP_2[text]).sum(),
   ];
 };
+
+export const samples = `A Y
+B X
+C Z`;

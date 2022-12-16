@@ -9,7 +9,9 @@ export const run = (input) => {
 
   const coords = {};
   const key = (x, y) => `${x},${y}`;
-
+  const occupied = (x, y) => {
+    return coords[key(x, y)] || y === maxY + 2;
+  };
   let minX = Number.MAX_SAFE_INTEGER;
   let maxX = 0;
   let maxY = 0;
@@ -40,12 +42,9 @@ export const run = (input) => {
         });
     });
 
-  const occupied = (x, y) => {
-    return coords[key(x, y)] || y === maxY + 2;
-  };
-
   while (true) {
     const sand = [500, 0];
+
     while (true) {
       if (!occupied(sand[0], sand[1] + 1)) {
         sand[1]++;
@@ -73,3 +72,6 @@ export const run = (input) => {
     p2,
   ];
 };
+
+export const samples = `498,4 -> 498,6 -> 496,6
+503,4 -> 502,4 -> 502,9 -> 494,9`;

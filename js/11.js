@@ -6,7 +6,6 @@ export const run = (input) => {
   const monkeyFns = {};
   const monkeys1 = [];
   const monkeys2 = [];
-
   let lcm = 1;
 
   input
@@ -52,6 +51,7 @@ export const run = (input) => {
   for (let i = 0; i < 20; i++) {
     for (let j = 0; j < monkeys1.length; j++) {
       const monkey = monkeys1[j];
+
       monkey.inspections += monkey.items.length;
       for (let item of monkey.items) {
         item = Math.floor(monkeyFns[j].operationFn(item) / 3);
@@ -63,6 +63,7 @@ export const run = (input) => {
   for (let i = 0; i < 10000; i++) {
     for (let j = 0; j < monkeys2.length; j++) {
       const monkey = monkeys2[j];
+
       monkey.inspections += monkey.items.length;
       for (let item of monkey.items) {
         item = monkeyFns[j].operationFn(item) % lcm;
@@ -85,3 +86,31 @@ export const run = (input) => {
       .product(),
   ];
 };
+
+export const samples = `Monkey 0:
+  Starting items: 79, 98
+  Operation: new = old * 19
+  Test: divisible by 23
+    If true: throw to monkey 2
+    If false: throw to monkey 3
+
+Monkey 1:
+  Starting items: 54, 65, 75, 74
+  Operation: new = old + 6
+  Test: divisible by 19
+    If true: throw to monkey 2
+    If false: throw to monkey 0
+
+Monkey 2:
+  Starting items: 79, 60, 97
+  Operation: new = old * old
+  Test: divisible by 13
+    If true: throw to monkey 1
+    If false: throw to monkey 3
+
+Monkey 3:
+  Starting items: 74
+  Operation: new = old + 3
+  Test: divisible by 17
+    If true: throw to monkey 0
+    If false: throw to monkey 1`;

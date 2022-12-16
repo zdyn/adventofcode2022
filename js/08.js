@@ -3,7 +3,6 @@ export const run = (input) => {
     .trim()
     .split("\n")
     .map((line) => line.split("").map(Number));
-
   let visible = 0;
   let maxScore = 0;
 
@@ -35,3 +34,9 @@ export const run = (input) => {
     maxScore,
   ];
 };
+
+export const samples = `30373
+25512
+65332
+33549
+35390`;

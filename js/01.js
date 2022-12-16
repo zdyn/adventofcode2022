@@ -18,3 +18,18 @@ export const run = (input) => {
     inventories.slice(0, 3).sum(),
   ];
 };
+
+export const samples = `1000
+2000
+3000
+
+4000
+
+5000
+6000
+
+7000
+8000
+9000
+
+10000`;

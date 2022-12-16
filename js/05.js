@@ -17,11 +17,12 @@ export const run = (input) => {
       .group(4)
       .map((group) => group[1])
       .forEach((crate, i) => {
-        if (i + 1 > stacks1.length) {
+        if (crate === " ") return;
+
+        while (i + 1 > stacks1.length) {
           stacks1.push([]);
           stacks2.push([]);
         }
-        if (crate === " ") return;
         stacks1[i].unshift(crate);
         stacks2[i].unshift(crate);
       });
@@ -46,3 +47,13 @@ export const run = (input) => {
     stacks2.map((s) => s[s.length - 1]).join(""),
   ];
 };
+
+export const samples = `    [D]
+[N] [C]
+[Z] [M] [P]
+ 1   2   3
+
+move 1 from 2 to 1
+move 3 from 1 to 3
+move 2 from 2 to 1
+move 1 from 1 to 2`;
