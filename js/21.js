@@ -1,3 +1,16 @@
+export const fns = {
+  "Part 1": (input) => {
+    return Number(solve(dfs(parse(input), "root")));
+  },
+  "Part 2": (input) => {
+    const monkes = parse(input);
+    const eq = solve(dfs(monkes, monkes.root[0], {"humn": "x"}));
+    // Right equation doesn't reference humn.
+    const constant = solve(dfs(monkes, monkes.root[2]));
+    return solveFor("x", eq, constant);
+  },
+};
+
 const parse = (input) => {
   return input
     .trim()
@@ -58,19 +71,6 @@ const solveFor = (x, eq, constant) => {
     }
   }
   return constant;
-};
-
-export const fns = {
-  "Part 1": (input) => {
-    return Number(solve(dfs(parse(input), "root")));
-  },
-  "Part 2": (input) => {
-    const monkes = parse(input);
-    const eq = solve(dfs(monkes, monkes.root[0], {"humn": "x"}));
-    // Right equation doesn't reference humn.
-    const constant = solve(dfs(monkes, monkes.root[2]));
-    return solveFor("x", eq, constant);
-  },
 };
 
 export const samples = `root: pppw + sjmn
