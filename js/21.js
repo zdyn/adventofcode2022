@@ -1,11 +1,13 @@
 export const fns = {
-  "Part 1": (input) => Number(solve(dfs(parse(input), "root"))),
+  "Part 1": (input) => eval(expand(parse(input), "root")),
   "Part 2": (input) => {
     const monkes = parse(input);
-    const eq = solve(dfs(monkes, monkes.root[0], {"humn": "x"}));
-    // Right equation doesn't reference humn.
-    const constant = solve(dfs(monkes, monkes.root[2]));
-    return solveFor("x", eq, Number(constant));
+    return solveFor(
+      "x",
+      expand(monkes, monkes.root[0], {"humn": "x"}),
+      // Right equation resolves to a constant.
+      eval(expand(monkes, monkes.root[2])),
+    );
   },
 };
 
@@ -21,27 +23,23 @@ const parse = (input) => {
     }, {});
 };
 
-const dfs = (monkes, monke, m) => {
+const expand = (monkes, monke, m) => {
   if (m != null && m[monke] != null) return m[monke];
 
   const yell = monkes[monke];
   if (yell.length === 1) return yell[0];
 
   const [left, op, right] = yell;
-  return `(${dfs(monkes, left, m)}${op}${dfs(monkes, right, m)})`;
+  return `(${expand(monkes, left, m)}${op}${expand(monkes, right, m)})`;
 };
 
-const solve = (eq) => {
+const solveFor = (x, eq, constant) => {
   const re = /\(\d+\.*\d*[+\-*/]\d+\.*\d*\)/g;
   let match = eq.match(re);
   while (match != null) {
     eq = eq.replace(match[0], eval(match[0]));
     match = eq.match(re);
   }
-  return eq;
-};
-
-const solveFor = (x, eq, constant) => {
   while (eq[0] === "(") {
     if (eq[eq.length - 2] !== ")") {
       let i = eq.slice(0, -1).lastIndexOf(")");
