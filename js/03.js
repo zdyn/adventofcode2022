@@ -43,6 +43,7 @@ Array.prototype.group = function(size) {
   }
   return groups;
 };
+
 Set.prototype.intersection = function(set) {
   const [a, b] = this.size <= set.size ? [this, set] : [set, this];
   const result = new Set();

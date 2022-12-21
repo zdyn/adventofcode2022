@@ -61,7 +61,7 @@ const ll = (nums, count) => {
   while (count-- > 0) {
     for (const node of nodes) {
       let {val, prev, next} = node;
-      if (val === 0) continue;
+      if (val === 0 || Math.abs(val % (nodes.length - 1)) === nodes.length - 1) continue;
 
       prev.next = next;
       next.prev = prev;
