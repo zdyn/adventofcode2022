@@ -1,17 +1,14 @@
-export const run = (input) => {
-  const chars = input.trim().split("");
-  const find = (size) => {
-    for (let i = 0; i < chars.length - size; i++) {
-      if (new Set(chars.slice(i, i + size)).size !== size) continue;
+export const fns = {
+  "Part 1": (input) => find(input.trim().split(""), 4),
+  "Part 2": (input) => find(input.trim().split(""), 14),
+};
 
-      return i + size;
-    }
-  };
+const find = (chars, size) => {
+  for (let i = 0; i < chars.length - size; i++) {
+    if (new Set(chars.slice(i, i + size)).size !== size) continue;
 
-  return [
-    find(4),
-    find(14),
-  ];
+    return i + size;
+  }
 };
 
 export const samples = `mjqjpqmgbljsphdztnvjfqwrcgsmlb`;

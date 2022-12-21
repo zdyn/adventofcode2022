@@ -1,36 +1,34 @@
-export const run = (input) => {
-  const moves = input
+export const fns = {
+  "Part 1": (input) => {
+    const knots = [...Array(2)].map(() => [0, 0]);
+    const moves = parse(input);
+    return visited(knots, moves);
+  },
+  "Part 2": (input) => {
+    const knots = [...Array(10)].map(() => [0, 0]);
+    const moves = parse(input);
+    return visited(knots, moves);
+  },
+};
+
+const parse = (input) => {
+  return input
     .trim()
     .split("\n")
-    .map((line) => {
-      const parts = line.split(" ");
-      return [parts[0], Number(parts[1])];
+    .map((move) => {
+      const parts = move.split(" ");
+      return {direction: parts[0], count: Number(parts[1])};
     });
-  const knots = [];
-  const visited1 = new Set(["0,0"]);
-  const visited2 = new Set(["0,0"]);
+};
 
-  for (let i = 0; i < 10; i++) {
-    knots.push([0, 0]);
-  }
-  for (let [dir, num] of moves) {
-    for (let i = 0; i < num; i++) {
+const visited = (knots, moves) => {
+  const visited = new Set(["0,0"]);
+  for (let {direction, count} of moves) {
+    while (count-- > 0) {
       let prev = knots[0];
-
-      switch (dir) {
-        case "R":
-          prev[0]++;
-          break;
-        case "L":
-          prev[0]--;
-          break;
-        case "U":
-          prev[1]++;
-          break;
-        case "D":
-          prev[1]--;
-          break;
-      }
+      const i = {"R": 0, "L": 0, "U": 1, "D": 1}[direction];
+      const d = {"R": 1, "L": -1, "U": 1, "D": -1}[direction];
+      prev[i] += d;
       for (let next of knots.slice(1)) {
         if (Math.abs(next[0] - prev[0]) > 1 && Math.abs(next[1] - prev[1]) > 1) {
           next[0] += prev[0] > next[0] ? 1 : -1;
@@ -39,21 +37,15 @@ export const run = (input) => {
           next[0] += prev[0] > next[0] ? 1 : -1;
           next[1] = prev[1];
         } else if (Math.abs(next[1] - prev[1]) > 1) {
-          next[1] += prev[1] > next[1] ? 1 : -1;
           next[0] = prev[0];
+          next[1] += prev[1] > next[1] ? 1 : -1;
         }
         prev = next;
       }
-
-      visited1.add(knots[1].join(","));
-      visited2.add(knots[knots.length - 1].join(","));
+      visited.add(knots[knots.length - 1].join(","));
     }
   }
-
-  return [
-    visited1.size,
-    visited2.size,
-  ];
+  return visited.size;
 };
 
 export const samples = [
@@ -72,5 +64,5 @@ D 3
 R 17
 D 10
 L 25
-U 20`
+U 20`,
 ];

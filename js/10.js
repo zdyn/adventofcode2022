@@ -1,40 +1,55 @@
-export const run = (input) => {
-  const commands = input
+export const fns = {
+  "Part 1": (input) => {
+    const commands = parse(input);
+    const checks = [20, 60, 100, 140, 180, 220];
+    let cycle = 0;
+    let x = 1;
+    let result = 0;
+    for (let {instruction, count} of commands) {
+      cycle++;
+      if (instruction === "addx") {
+        cycle++;
+        x += count;
+      }
+      if (cycle >= checks[0]) {
+        result += checks.shift() * (x - count);
+      }
+    }
+    return result;
+  },
+  "Part 2": (input) => {
+    const commands = parse(input);
+    const positions = [];
+    let x = 1;
+    for (let {instruction, count} of commands) {
+      positions.push(x);
+      if (instruction === "addx") {
+        positions.push(x);
+        x += count;
+      }
+    }
+    return positions
+      .map((position, i) => {
+        return (
+          (i % 40 === 0 ? "\n" : "") +
+          (position - 1 <= i % 40 && position + 1 >= i % 40 ? "#" : ".")
+        );
+      })
+      .join("");
+  },
+};
+
+const parse = (input) => {
+  return input
     .trim()
     .split("\n")
-    .map((line) => {
-      const parts = line.split(" ");
-      return [parts[0], Number(parts[1] || 0)];
+    .map((command) => {
+      const parts = command.split(" ");
+      return {
+        instruction: parts[0],
+        count: Number(parts[1] || 0),
+      };
     });
-  const positions = [];
-  const checks = [20, 60, 100, 140, 180, 220];
-  let cycle = 0;
-  let x = 1;
-  let sum = 0;
-
-  for (let [cmd, num] of commands) {
-    if (cmd === "noop") {
-      cycle += 1;
-      positions.push(x);
-    } else if (cmd === "addx") {
-      cycle += 2;
-      positions.push(x, x);
-      x += num;
-    }
-    if (cycle >= checks[0]) {
-      sum += checks.shift() * (x - num);
-    }
-  }
-
-  return [
-    sum,
-    positions.map((pos, i) => {
-      return (
-        (i % 40 === 0 ? "\n" : "") +
-        (pos - 1 <= i % 40 && pos + 1 >= i % 40 ? "#" : ".")
-      );
-    }).join(""),
-  ];
 };
 
 export const samples = `addx 15

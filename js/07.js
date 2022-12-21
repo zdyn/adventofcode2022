@@ -1,13 +1,43 @@
-export const run = (input) => {
-  const lines = input.trim().split("\n");
+export const fns = {
+  "Part 1": (input) => {
+    const root = parse(input);
+    let result = 0;
+    let queue = [root];
+    while (queue.length > 0) {
+      const next = [];
+      for (const dir of queue) {
+        if (dir.size <= 100000) {
+          result += dir.size;
+        }
+        next.push(...Object.values(dir.children));
+      }
+      queue = next;
+    }
+    return result;
+  },
+  "Part 2": (input) => {
+    const root = parse(input);
+    let result = Number.MAX_SAFE_INTEGER;
+    let queue = [root];
+    while (queue.length > 0) {
+      const next = [];
+      for (const dir of queue) {
+        if (40000000 >= root.size - dir.size && dir.size < result) {
+          result = dir.size;
+        }
+        next.push(...Object.values(dir.children));
+      }
+      queue = next;
+    }
+    return result;
+  },
+};
+
+const parse = (input) => {
   const root = {size: 0, children: {}};
   let path = [];
-  let p1 = 0;
-  let p2 = Number.MAX_SAFE_INTEGER;
-
-  for (let line of lines) {
+  for (const line of input.trim().split("\n")) {
     const parts = line.split(" ");
-
     if (parts[0] === "$") {
       if (parts[1] !== "cd") continue;
       if (parts[2] === "/") {
@@ -20,9 +50,8 @@ export const run = (input) => {
     } else {
       const size = parts[0] === "dir" ? 0 : Number(parts[0]);
       let dir = root;
-
       dir.size += size;
-      for (let p of path) {
+      for (const p of path) {
         dir = dir.children[p];
         dir.size += size;
       }
@@ -31,29 +60,7 @@ export const run = (input) => {
       }
     }
   }
-
-  let dirs = [root];
-  while (dirs.length > 0) {
-    const next = [];
-
-    for (let dir of dirs) {
-      const size = dir.size;
-
-      if (size <= 100000) {
-        p1 += size;
-      }
-      if (40000000 >= root.size - size) {
-        p2 = Math.min(p2, size);
-      }
-      next.push(...Object.values(dir.children));
-    }
-    dirs = next;
-  }
-
-  return [
-    p1,
-    p2,
-  ];
+  return root;
 };
 
 export const samples = `$ cd /

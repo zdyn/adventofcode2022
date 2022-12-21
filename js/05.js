@@ -1,51 +1,54 @@
-export const run = (input) => {
-  Array.prototype.group = function(size) {
-    const groups = [];
-    for (let i = 0; i < this.length; i += size) {
-      groups.push(this.slice(i, i + size));
+export const fns = {
+  "Part 1": (input) => {
+    const {stacks, moves} = parse(input);
+    for (let {from, to, count} of moves) {
+      while (count-- > 0) {
+        stacks[to - 1].push(stacks[from - 1].pop());
+      }
     }
-    return groups;
-  };
+    return stacks.map((s) => s[s.length - 1]).join("");
+  },
+  "Part 2": (input) => {
+    const {stacks, moves} = parse(input);
+    for (const {from, to, count} of moves) {
+      stacks[to - 1] = stacks[to - 1].concat(
+        stacks[from - 1].splice(stacks[from - 1].length - count, count),
+      );
+    }
+    return stacks.map((s) => s[s.length - 1]).join("");
+  },
+};
 
+const parse = (input) => {
   const parts = input.split("\n\n");
-  const stacks1 = [];
-  const stacks2 = [];
-
-  for (let line of parts[0].split("\n").slice(0, -1)) {
+  const stacks = [];
+  const moves = [];
+  for (const line of parts[0].split("\n").slice(0, -1)) {
     line
-      .split("")
       .group(4)
-      .map((group) => group[1])
+      .map((crate) => crate[1])
       .forEach((crate, i) => {
         if (crate === " ") return;
 
-        while (i + 1 > stacks1.length) {
-          stacks1.push([]);
-          stacks2.push([]);
+        while (i + 1 > stacks.length) {
+          stacks.push([]);
         }
-        stacks1[i].unshift(crate);
-        stacks2[i].unshift(crate);
+        stacks[i].unshift(crate);
       });
   }
-
-  for (let line of parts[1].trim().split("\n")) {
-    const words = line.split(" ");
-    const count = Number(words[1]);
-    const from = Number(words[3]) - 1;
-    const to = Number(words[5]) - 1;
-
-    for (let i = 0; i < count; i++) {
-      stacks1[to].push(stacks1[from].pop());
-    }
-    stacks2[to] = stacks2[to].concat(
-      stacks2[from].splice(stacks2[from].length - count, count),
-    );
+  for (const line of parts[1].trim().split("\n")) {
+    const [count, from, to] = line.match(/\d+/g).map(Number);
+    moves.push({from, to, count});
   }
+  return {stacks, moves};
+};
 
-  return [
-    stacks1.map((s) => s[s.length - 1]).join(""),
-    stacks2.map((s) => s[s.length - 1]).join(""),
-  ];
+String.prototype.group = function(size) {
+  const groups = [];
+  for (let i = 0; i < this.length; i += size) {
+    groups.push(this.slice(i, i + size));
+  }
+  return groups;
 };
 
 export const samples = `    [D]
