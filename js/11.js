@@ -1,11 +1,11 @@
 export const fns = {
   "Part 1": (input) => {
-    const monkeyFns = {};
-    const monkeys = [];
+    const monkeFns = {};
+    const monkes = [];
     input
       .split("\n\n")
-      .forEach((monkey, i) => {
-        const lines = monkey.split("\n").map((s) => s.trim());
+      .forEach((monke, i) => {
+        const lines = monke.split("\n").map((s) => s.trim());
         const items = lines[1].match(/\d+/g).map(Number);
         const [operation, operand] = lines[2].split(" ").slice(4);
         const operationFn = (old) => {
@@ -19,37 +19,38 @@ export const fns = {
         const t = Number(lines[4].match(/\d+/)[0]);
         const f = Number(lines[5].match(/\d+/)[0]);
         const testFn = (old) => old % divisor === 0 ? t : f;
-        monkeyFns[i] = {operationFn, testFn};
-        monkeys.push({
+        monkeFns[i] = {operationFn, testFn};
+        monkes.push({
           items: items.slice(),
           inspections: 0,
         });
       });
     for (let i = 0; i < 20; i++) {
-      for (let j = 0; j < monkeys.length; j++) {
-        const monkey = monkeys[j];
-        monkey.inspections += monkey.items.length;
-        for (let item of monkey.items) {
-          item = Math.floor(monkeyFns[j].operationFn(item) / 3);
-          monkeys[monkeyFns[j].testFn(item)].items.push(item);
+      for (let j = 0; j < monkes.length; j++) {
+        const monke = monkes[j];
+        monke.inspections += monke.items.length;
+        for (let item of monke.items) {
+          item = Math.floor(monkeFns[j].operationFn(item) / 3);
+          monkes[monkeFns[j].testFn(item)].items.push(item);
         }
-        monkey.items = [];
+        monke.items = [];
       }
     }
-    return monkeys
+    // Return to monke.
+    return monkes
       .map((m) => m.inspections)
       .sort((a, b) => b - a)
       .slice(0, 2)
       .product();
   },
   "Part 2": (input) => {
-    const monkeyFns = {};
-    const monkeys = [];
+    const monkeFns = {};
+    const monkes = [];
     let lcm = 1;
     input
       .split("\n\n")
-      .forEach((monkey, i) => {
-        const lines = monkey.split("\n").map((s) => s.trim());
+      .forEach((monke, i) => {
+        const lines = monke.split("\n").map((s) => s.trim());
         const items = lines[1].match(/\d+/g).map(Number);
         const [operation, operand] = lines[2].split(" ").slice(4);
         const operationFn = (old) => {
@@ -64,24 +65,25 @@ export const fns = {
         const f = Number(lines[5].match(/\d+/)[0]);
         const testFn = (old) => old % divisor === 0 ? t : f;
         lcm *= divisor;
-        monkeyFns[i] = {operationFn, testFn};
-        monkeys.push({
+        monkeFns[i] = {operationFn, testFn};
+        monkes.push({
           items: items.slice(),
           inspections: 0,
         });
       });
     for (let i = 0; i < 10000; i++) {
-      for (let j = 0; j < monkeys.length; j++) {
-        const monkey = monkeys[j];
-        monkey.inspections += monkey.items.length;
-        for (let item of monkey.items) {
-          item = monkeyFns[j].operationFn(item) % lcm;
-          monkeys[monkeyFns[j].testFn(item)].items.push(item);
+      for (let j = 0; j < monkes.length; j++) {
+        const monke = monkes[j];
+        monke.inspections += monke.items.length;
+        for (let item of monke.items) {
+          item = monkeFns[j].operationFn(item) % lcm;
+          monkes[monkeFns[j].testFn(item)].items.push(item);
         }
-        monkey.items = [];
+        monke.items = [];
       }
     }
-    return monkeys
+    // Return to monke.
+    return monkes
       .map((m) => m.inspections)
       .sort((a, b) => b - a)
       .slice(0, 2)
