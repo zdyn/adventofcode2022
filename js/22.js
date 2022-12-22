@@ -34,15 +34,9 @@ const parseMap = (input) => {
 };
 
 const parseMoves = (input) => {
-  const moves = [];
-  let path = "R" + input;
-  while (path !== "") {
-    const turn = path[0];
-    const num = Number(path.match(/\d+/g)[0]);
-    path = path.slice(`${num}`.length + 1);
-    moves.push({turn, num});
-  }
-  return moves;
+  return ("R" + input)
+    .match(/[LR]\d+/g)
+    .map((move) => ({turn: move[0], num: Number(move.slice(1))}));
 };
 
 const setFlatMap = (map) => {
