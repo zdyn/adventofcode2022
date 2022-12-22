@@ -2,12 +2,14 @@ export const fns = {
   "Part 1": (input) => eval(expand(parse(input), "root")),
   "Part 2": (input) => {
     const monkes = parse(input);
-    return solveFor(
-      "x",
-      expand(monkes, monkes.root[0], {"humn": "x"}),
-      // Right equation resolves to a constant.
-      eval(expand(monkes, monkes.root[2])),
-    );
+    const eq = evalSolve(expand(monkes, monkes.root[0], {"humn": "x"}));
+    return solveFor("x", eq, eval(expand(monkes, monkes.root[2])));
+  },
+  "Part 1 (no eval)": (input) => Number(solve(expand(parse(input), "root"))),
+  "Part 2 (no eval)": (input) => {
+    const monkes = parse(input);
+    const eq = solve(expand(monkes, monkes.root[0], {"humn": "x"}));
+    return solveFor("x", eq, Number(solve(expand(monkes, monkes.root[2]))));
   },
 };
 
@@ -33,13 +35,35 @@ const expand = (monkes, monke, m) => {
   return `(${expand(monkes, left, m)}${op}${expand(monkes, right, m)})`;
 };
 
-const solveFor = (x, eq, constant) => {
+const evalSolve = (eq) => {
   const re = /\(\d+\.*\d*[+\-*/]\d+\.*\d*\)/g;
   let match = eq.match(re);
   while (match != null) {
     eq = eq.replace(match[0], eval(match[0]));
     match = eq.match(re);
   }
+  return eq;
+};
+
+const solve = (eq) => {
+  const re = /\(\d+\.*\d*[+\-*/]\d+\.*\d*\)/g;
+  let match = eq.match(re);
+  while (match != null) {
+    const [left, right] = match[0].slice(1, -1).split(/[+\-*/]/).map(Number);
+    let num;
+    switch (match[0][`${left}`.length + 1]) {
+      case "+": num = left + right; break;
+      case "-": num = left - right; break;
+      case "*": num = left * right; break;
+      case "/": num = left / right; break;
+    }
+    eq = eq.replace(match[0], num);
+    match = eq.match(re);
+  }
+  return eq;
+};
+
+const solveFor = (x, eq, constant) => {
   while (eq[0] === "(") {
     if (eq[eq.length - 2] !== ")") {
       let i = eq.slice(0, -1).lastIndexOf(")");
