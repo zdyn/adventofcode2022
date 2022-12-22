@@ -19,7 +19,7 @@ const parse = (input) => {
   return input
     .split("\n")
     .filter((line) => line)
-    .map(eval);
+    .map(JSON.parse);
 };
 
 const compare = (left, right) => {
