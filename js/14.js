@@ -73,7 +73,7 @@ const parse = (input) => {
   return {occupied, maxY};
 };
 
-const key = (i, j) => `${i},${j}`;
+const key = (...args) => args.join(",");
 
 Array.prototype.group = function(size, step) {
   const groups = [];

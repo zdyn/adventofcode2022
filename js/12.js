@@ -39,7 +39,7 @@ const HEIGHTS = "abcdefghijklmnopqrstuvwxyz"
   }, {"S": 0, "E": 25});
 
 const distance = (grid, fromCoords, to) => {
-  const key = (i, j) => `${i},${j}`;
+  const key = (...args) => args.join(",");
   const distances = {[key(...fromCoords)]: 0};
   let queue = [fromCoords];
   while (queue.length > 0) {
