@@ -29,7 +29,7 @@ const visited = (knots, moves) => {
       const i = { R: 0, L: 0, U: 1, D: 1 }[direction];
       const d = { R: 1, L: -1, U: 1, D: -1 }[direction];
       prev[i] += d;
-      for (let next of knots.slice(1)) {
+      for (const next of knots.slice(1)) {
         if (
           Math.abs(next[0] - prev[0]) > 1 &&
           Math.abs(next[1] - prev[1]) > 1
