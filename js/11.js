@@ -2,29 +2,27 @@ export const fns = {
   "Part 1": (input) => {
     const monkeFns = {};
     const monkes = [];
-    input
-      .split("\n\n")
-      .forEach((monke, i) => {
-        const lines = monke.split("\n").map((s) => s.trim());
-        const items = lines[1].match(/\d+/g).map(Number);
-        const [operation, operand] = lines[2].split(" ").slice(4);
-        const operationFn = (old) => {
-          if (operation === "+") {
-            return old + (operand === "old" ? old : Number(operand));
-          } else {
-            return old * (operand === "old" ? old : Number(operand));
-          }
-        };
-        const divisor = Number(lines[3].match(/\d+/)[0]);
-        const t = Number(lines[4].match(/\d+/)[0]);
-        const f = Number(lines[5].match(/\d+/)[0]);
-        const testFn = (old) => old % divisor === 0 ? t : f;
-        monkeFns[i] = {operationFn, testFn};
-        monkes.push({
-          items: items.slice(),
-          inspections: 0,
-        });
+    input.split("\n\n").forEach((monke, i) => {
+      const lines = monke.split("\n").map((s) => s.trim());
+      const items = lines[1].match(/\d+/g).map(Number);
+      const [operation, operand] = lines[2].split(" ").slice(4);
+      const operationFn = (old) => {
+        if (operation === "+") {
+          return old + (operand === "old" ? old : Number(operand));
+        } else {
+          return old * (operand === "old" ? old : Number(operand));
+        }
+      };
+      const divisor = Number(lines[3].match(/\d+/)[0]);
+      const t = Number(lines[4].match(/\d+/)[0]);
+      const f = Number(lines[5].match(/\d+/)[0]);
+      const testFn = (old) => (old % divisor === 0 ? t : f);
+      monkeFns[i] = { operationFn, testFn };
+      monkes.push({
+        items: items.slice(),
+        inspections: 0,
       });
+    });
     for (let i = 0; i < 20; i++) {
       for (let j = 0; j < monkes.length; j++) {
         const monke = monkes[j];
@@ -47,30 +45,28 @@ export const fns = {
     const monkeFns = {};
     const monkes = [];
     let lcm = 1;
-    input
-      .split("\n\n")
-      .forEach((monke, i) => {
-        const lines = monke.split("\n").map((s) => s.trim());
-        const items = lines[1].match(/\d+/g).map(Number);
-        const [operation, operand] = lines[2].split(" ").slice(4);
-        const operationFn = (old) => {
-          if (operation === "+") {
-            return old + (operand === "old" ? old : Number(operand));
-          } else {
-            return old * (operand === "old" ? old : Number(operand));
-          }
-        };
-        const divisor = Number(lines[3].match(/\d+/)[0]);
-        const t = Number(lines[4].match(/\d+/)[0]);
-        const f = Number(lines[5].match(/\d+/)[0]);
-        const testFn = (old) => old % divisor === 0 ? t : f;
-        lcm *= divisor;
-        monkeFns[i] = {operationFn, testFn};
-        monkes.push({
-          items: items.slice(),
-          inspections: 0,
-        });
+    input.split("\n\n").forEach((monke, i) => {
+      const lines = monke.split("\n").map((s) => s.trim());
+      const items = lines[1].match(/\d+/g).map(Number);
+      const [operation, operand] = lines[2].split(" ").slice(4);
+      const operationFn = (old) => {
+        if (operation === "+") {
+          return old + (operand === "old" ? old : Number(operand));
+        } else {
+          return old * (operand === "old" ? old : Number(operand));
+        }
+      };
+      const divisor = Number(lines[3].match(/\d+/)[0]);
+      const t = Number(lines[4].match(/\d+/)[0]);
+      const f = Number(lines[5].match(/\d+/)[0]);
+      const testFn = (old) => (old % divisor === 0 ? t : f);
+      lcm *= divisor;
+      monkeFns[i] = { operationFn, testFn };
+      monkes.push({
+        items: items.slice(),
+        inspections: 0,
       });
+    });
     for (let i = 0; i < 10000; i++) {
       for (let j = 0; j < monkes.length; j++) {
         const monke = monkes[j];
@@ -91,7 +87,7 @@ export const fns = {
   },
 };
 
-Array.prototype.product = function() {
+Array.prototype.product = function () {
   return this.reduce((agg, num) => agg * num, 1);
 };
 

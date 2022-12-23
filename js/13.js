@@ -10,7 +10,10 @@ export const fns = {
     return [[[2]], [[6]], ...parse(input)]
       .sort(compare)
       .reduce((agg, packet, i) => {
-        return agg * (["[[2]]", "[[6]]"].includes(JSON.stringify(packet)) ? i + 1 : 1);
+        return (
+          agg *
+          (["[[2]]", "[[6]]"].includes(JSON.stringify(packet)) ? i + 1 : 1)
+        );
       }, 1);
   },
 };
@@ -34,10 +37,10 @@ const compare = (left, right) => {
     if (diff !== 0) return diff;
     i++;
   }
-  return i < right.length ? -1 : (i < left.length ? 1 : 0);
+  return i < right.length ? -1 : i < left.length ? 1 : 0;
 };
 
-Array.prototype.group = function(size) {
+Array.prototype.group = function (size) {
   const groups = [];
   for (let i = 0; i < this.length; i += size) {
     groups.push(this.slice(i, i + size));

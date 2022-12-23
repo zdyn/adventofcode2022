@@ -1,6 +1,6 @@
 export const fns = {
   "Part 1": (input) => {
-    const {occupied, maxY} = parse(input);
+    const { occupied, maxY } = parse(input);
     let result = 0;
     while (true) {
       const sand = [500, 0];
@@ -23,14 +23,18 @@ export const fns = {
     }
   },
   "Part 2": (input) => {
-    const {occupied, maxY} = parse(input);
+    const { occupied, maxY } = parse(input);
     let queue = [[500, 0]];
     let result = 1;
     occupied.add(key(500, 0));
     while (queue.length > 0) {
       const next = [];
       for (const [x, y] of queue) {
-        for (const [xDiff, yDiff] of [[-1, 1], [0, 1], [1, 1]]) {
+        for (const [xDiff, yDiff] of [
+          [-1, 1],
+          [0, 1],
+          [1, 1],
+        ]) {
           const x2 = x + xDiff;
           const y2 = y + yDiff;
           const k = key(x2, y2);
@@ -70,12 +74,12 @@ const parse = (input) => {
           maxY = Math.max(maxY, y1, y2);
         });
     });
-  return {occupied, maxY};
+  return { occupied, maxY };
 };
 
 const key = (...args) => args.join(",");
 
-Array.prototype.group = function(size, step) {
+Array.prototype.group = function (size, step) {
   const groups = [];
   for (let i = 0; i <= this.length - size; i += step) {
     groups.push(this.slice(i, i + size));

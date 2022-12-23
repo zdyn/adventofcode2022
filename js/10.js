@@ -5,7 +5,7 @@ export const fns = {
     let cycle = 0;
     let x = 1;
     let result = 0;
-    for (let {instruction, count} of commands) {
+    for (let { instruction, count } of commands) {
       cycle++;
       if (instruction === "addx") {
         cycle++;
@@ -21,7 +21,7 @@ export const fns = {
     const commands = parse(input);
     const positions = [];
     let x = 1;
-    for (let {instruction, count} of commands) {
+    for (let { instruction, count } of commands) {
       positions.push(x);
       if (instruction === "addx") {
         positions.push(x);

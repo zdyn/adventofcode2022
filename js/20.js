@@ -3,13 +3,25 @@ export const fns = {
     return mix(input.trim().split("\n").map(Number), 1);
   },
   "Part 2": (input) => {
-    return mix(input.trim().split("\n").map((num) => Number(num) * 811589153), 10);
+    return mix(
+      input
+        .trim()
+        .split("\n")
+        .map((num) => Number(num) * 811589153),
+      10
+    );
   },
   "Part 1 (linked list)": (input) => {
     return ll(input.trim().split("\n").map(Number), 1);
   },
   "Part 2 (linked list)": (input) => {
-    return ll(input.trim().split("\n").map((num) => Number(num) * 811589153), 10);
+    return ll(
+      input
+        .trim()
+        .split("\n")
+        .map((num) => Number(num) * 811589153),
+      10
+    );
   },
 };
 
@@ -21,7 +33,7 @@ const mix = (nums, count) => {
     for (let i = 0; i < numIdxs.length; i++) {
       const from = numIdxs[i];
       const num = nums[from];
-      const to = (num % len + len + from) % len;
+      const to = ((num % len) + len + from) % len;
       if (to === from) continue;
 
       nums.splice(from, 1)[0];
@@ -42,15 +54,17 @@ const mix = (nums, count) => {
     }
   }
   const i = nums.findIndex((num) => num === 0);
-  return nums[(1000 + i) % nums.length] +
+  return (
+    nums[(1000 + i) % nums.length] +
     nums[(2000 + i) % nums.length] +
-    nums[(3000 + i) % nums.length];
+    nums[(3000 + i) % nums.length]
+  );
 };
 
 const ll = (nums, count) => {
   let start;
   const nodes = nums.map((num) => {
-    const ref = {val: num, prev: null, next: null};
+    const ref = { val: num, prev: null, next: null };
     if (num === 0) start = ref;
     return ref;
   });
@@ -60,8 +74,10 @@ const ll = (nums, count) => {
   }
   while (count-- > 0) {
     for (const node of nodes) {
-      let {val, prev, next} = node;
-      if (val === 0 || Math.abs(val % (nodes.length - 1)) === nodes.length - 1) continue;
+      let { val, prev, next } = node;
+      if (val === 0 || Math.abs(val % (nodes.length - 1)) === nodes.length - 1) {
+        continue;
+      }
 
       prev.next = next;
       next.prev = prev;

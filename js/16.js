@@ -1,6 +1,6 @@
 export const fns = {
   "Part 1": (input) => {
-    const {valves, rates, tunnels, distances} = parse(input);
+    const { valves, rates, tunnels, distances } = parse(input);
     const dfs = (from, visited, time, released) => {
       const totals = [released];
       for (const [to, distance] of Object.entries(distances[from])) {
@@ -8,7 +8,12 @@ export const fns = {
 
         visited.add(to);
         totals.push(
-          dfs(to, visited, time - distance, released + (time - distance) * rates[to]),
+          dfs(
+            to,
+            visited,
+            time - distance,
+            released + (time - distance) * rates[to]
+          )
         );
         visited.delete(to);
       }
@@ -17,7 +22,7 @@ export const fns = {
     return dfs("AA", new Set(["AA"]), 30, 0);
   },
   "Part 2": (input) => {
-    const {valves, rates, tunnels, distances} = parse(input);
+    const { valves, rates, tunnels, distances } = parse(input);
     // TODO: Speed up.
     const dfs = ([from1, from2], visited, [time1, time2], released) => {
       const totals = [released];
@@ -27,7 +32,12 @@ export const fns = {
 
           visited.add(to);
           totals.push(
-            dfs([to, from2], visited, [time1 - distance, time2], released + (time1 - distance) * rates[to]),
+            dfs(
+              [to, from2],
+              visited,
+              [time1 - distance, time2],
+              released + (time1 - distance) * rates[to]
+            )
           );
           visited.delete(to);
         }
@@ -37,7 +47,12 @@ export const fns = {
 
           visited.add(to);
           totals.push(
-            dfs([from1, to], visited, [time1, time2 - distance], released + (time2 - distance) * rates[to]),
+            dfs(
+              [from1, to],
+              visited,
+              [time1, time2 - distance],
+              released + (time2 - distance) * rates[to]
+            )
           );
           visited.delete(to);
         }
@@ -95,7 +110,7 @@ const parse = (input) => {
       distances[valves[j]][valves[i]] = distance;
     }
   }
-  return {valves, rates, tunnels, distances};
+  return { valves, rates, tunnels, distances };
 };
 
 export const samples = `Valve AA has flow rate=0; tunnels lead to valves DD, II, BB

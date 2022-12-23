@@ -31,33 +31,44 @@ const parse = (input) => {
     .map((row) => row.split(""));
 };
 
-const HEIGHTS = "abcdefghijklmnopqrstuvwxyz"
-  .split("")
-  .reduce((agg, letter, i) => {
+const HEIGHTS = "abcdefghijklmnopqrstuvwxyz".split("").reduce(
+  (agg, letter, i) => {
     agg[letter] = i;
     return agg;
-  }, {"S": 0, "E": 25});
+  },
+  { S: 0, E: 25 }
+);
 
 const distance = (grid, fromCoords, to) => {
   const key = (...args) => args.join(",");
-  const distances = {[key(...fromCoords)]: 0};
+  const distances = { [key(...fromCoords)]: 0 };
   let queue = [fromCoords];
   while (queue.length > 0) {
     const next = [];
-    for (let [x, y] of queue) {
+    for (const [x, y] of queue) {
       const k = key(x, y);
       const distance = distances[k] + 1;
       if (grid[x][y] === to) return distance - 1;
 
-      for (let [xDiff, yDiff] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) {
+      for (const [xDiff, yDiff] of [
+        [-1, 0],
+        [1, 0],
+        [0, -1],
+        [0, 1],
+      ]) {
         const x2 = x + xDiff;
         const y2 = y + yDiff;
         const k2 = key(x2, y2);
         if (
-          x2 < 0 || y2 < 0 || x2 >= grid.length || y2 >= grid[x2].length ||
+          x2 < 0 ||
+          y2 < 0 ||
+          x2 >= grid.length ||
+          y2 >= grid[x2].length ||
           HEIGHTS[grid[x2][y2]] - HEIGHTS[grid[x][y]] < -1 ||
           (distances[k2] != null && distances[k2] <= distance)
-        ) continue;
+        ) {
+          continue;
+        }
 
         distances[k2] = distance;
         next.push([x2, y2]);
@@ -67,7 +78,7 @@ const distance = (grid, fromCoords, to) => {
   }
 };
 
-Array.prototype.forMatrix = function(fn) {
+Array.prototype.forMatrix = function (fn) {
   for (let i = 0; i < this.length; i++) {
     for (let j = 0; j < this[i].length; j++) {
       if (fn(this[i][j], i, j)) return;

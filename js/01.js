@@ -11,7 +11,7 @@ const parse = (input) => {
     .sort((a, b) => b - a);
 };
 
-Array.prototype.sum = function() {
+Array.prototype.sum = function () {
   return this.reduce((agg, num) => agg + num, 0);
 };
 

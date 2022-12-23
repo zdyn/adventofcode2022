@@ -2,13 +2,13 @@ export const fns = {
   "Part 1": (input) => eval(expand(parse(input), "root")),
   "Part 2": (input) => {
     const monkes = parse(input);
-    const eq = evalSolve(expand(monkes, monkes.root[0], {"humn": "x"}));
+    const eq = evalSolve(expand(monkes, monkes.root[0], { humn: "x" }));
     return solveFor("x", eq, eval(expand(monkes, monkes.root[2])));
   },
   "Part 1 (no eval)": (input) => Number(solve(expand(parse(input), "root"))),
   "Part 2 (no eval)": (input) => {
     const monkes = parse(input);
-    const eq = solve(expand(monkes, monkes.root[0], {"humn": "x"}));
+    const eq = solve(expand(monkes, monkes.root[0], { humn: "x" }));
     return solveFor("x", eq, Number(solve(expand(monkes, monkes.root[2]))));
   },
 };
@@ -49,13 +49,24 @@ const solve = (eq) => {
   const re = /\(\d+\.*\d*[+\-*/]\d+\.*\d*\)/g;
   let match = eq.match(re);
   while (match != null) {
-    const [left, right] = match[0].slice(1, -1).split(/[+\-*/]/).map(Number);
+    const [left, right] = match[0]
+      .slice(1, -1)
+      .split(/[+\-*/]/)
+      .map(Number);
     let num;
     switch (match[0][`${left}`.length + 1]) {
-      case "+": num = left + right; break;
-      case "-": num = left - right; break;
-      case "*": num = left * right; break;
-      case "/": num = left / right; break;
+      case "+":
+        num = left + right;
+        break;
+      case "-":
+        num = left - right;
+        break;
+      case "*":
+        num = left * right;
+        break;
+      case "/":
+        num = left / right;
+        break;
     }
     eq = eq.replace(match[0], num);
     match = eq.match(re);
@@ -71,10 +82,18 @@ const solveFor = (x, eq, constant) => {
       const op = eq[i + 1];
       const num = Number(eq.slice(i + 2, -1));
       switch (op) {
-        case "+": constant -= num; break;
-        case "-": constant += num; break;
-        case "*": constant /= num; break;
-        case "/": constant *= num; break;
+        case "+":
+          constant -= num;
+          break;
+        case "-":
+          constant += num;
+          break;
+        case "*":
+          constant /= num;
+          break;
+        case "/":
+          constant *= num;
+          break;
       }
       eq = eq.slice(1, i + 1);
     } else {
@@ -82,10 +101,18 @@ const solveFor = (x, eq, constant) => {
       const op = eq[i];
       const num = Number(eq.slice(1, i));
       switch (op) {
-        case "+": constant -= num; break;
-        case "-": constant = num - constant; break;
-        case "*": constant /= num; break;
-        case "/": constant = num / constant; break;
+        case "+":
+          constant -= num;
+          break;
+        case "-":
+          constant = num - constant;
+          break;
+        case "*":
+          constant /= num;
+          break;
+        case "/":
+          constant = num / constant;
+          break;
       }
       eq = eq.slice(i + 1, -1);
     }

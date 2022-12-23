@@ -1,13 +1,12 @@
 export const fns = {
   "Part 1": (input) => {
-    return parse(input)
-      .reduce((agg, items) => {
-        const set = items
-          .group(items.length / 2)
-          .map((items) => new Set(items))
-          .reduce((agg, set) => agg.intersection(set));
-        return agg + PRIORITY[[...set][0]];
-      }, 0);
+    return parse(input).reduce((agg, items) => {
+      const set = items
+        .group(items.length / 2)
+        .map((items) => new Set(items))
+        .reduce((agg, set) => agg.intersection(set));
+      return agg + PRIORITY[[...set][0]];
+    }, 0);
   },
   "Part 2": (input) => {
     return parse(input)
@@ -36,7 +35,7 @@ const PRIORITY = "abcdefghijklmnopqrstuvwxyz"
     return agg;
   }, {});
 
-Array.prototype.group = function(size) {
+Array.prototype.group = function (size) {
   const groups = [];
   for (let i = 0; i < this.length; i += size) {
     groups.push(this.slice(i, i + size));
@@ -44,7 +43,7 @@ Array.prototype.group = function(size) {
   return groups;
 };
 
-Set.prototype.intersection = function(set) {
+Set.prototype.intersection = function (set) {
   const [a, b] = this.size <= set.size ? [this, set] : [set, this];
   const result = new Set();
   for (const mem of a) {

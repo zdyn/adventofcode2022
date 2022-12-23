@@ -34,7 +34,7 @@ export const fns = {
 };
 
 const parse = (input) => {
-  const root = {size: 0, children: {}};
+  const root = { size: 0, children: {} };
   let path = [];
   for (const line of input.trim().split("\n")) {
     const parts = line.split(" ");
@@ -56,7 +56,7 @@ const parse = (input) => {
         dir.size += size;
       }
       if (parts[0] === "dir") {
-        dir.children[parts[1]] = {size: 0, children: {}};
+        dir.children[parts[1]] = { size: 0, children: {} };
       }
     }
   }

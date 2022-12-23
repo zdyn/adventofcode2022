@@ -4,7 +4,9 @@ export const fns = {
     const y = isSample ? 10 : 2000000;
     const ranges = getRanges(reports, y);
     splitRanges(ranges);
-    const beacons = new Set(reports.filter(({by}) => by === y).map(({bx, by}) => `${bx},${by}`));
+    const beacons = new Set(
+      reports.filter(({ by }) => by === y).map(({ bx, by }) => `${bx},${by}`)
+    );
     return ranges.map(([a, b]) => b - a + 1).sum() - beacons.size;
   },
   "Part 2": (input, isSample) => {
@@ -12,11 +14,13 @@ export const fns = {
     const limit = isSample ? 20 : 4000000;
     for (let i = 0; i < limit; i++) {
       const ranges = getRanges(reports, i);
-      splitRanges(ranges)
+      splitRanges(ranges);
       const y = ranges
         .sort((a, b) => a[0] - b[0])
         .findIndex(([from, to], i) => {
-          return i !== 0 && from <= limit && to >= 0 && from - ranges[i - 1][1] > 1;
+          return (
+            i !== 0 && from <= limit && to >= 0 && from - ranges[i - 1][1] > 1
+          );
         });
       if (y !== -1) {
         return 4000000 * (ranges[y][0] - 1) + i;
@@ -27,10 +31,10 @@ export const fns = {
     const reports = parse(input);
     const y = isSample ? 10 : 2000000;
     const rangesMap = getRangesMap(reports, null, [y, y]);
-    const beacons = new Set(reports.filter(({by}) => by === y).map(({bx, by}) => `${bx},${by}`));
-    return rangesMap[y]
-      .map(([from, to]) => to - from + 1)
-      .sum() - beacons.size;
+    const beacons = new Set(
+      reports.filter(({ by }) => by === y).map(({ bx, by }) => `${bx},${by}`)
+    );
+    return rangesMap[y].map(([from, to]) => to - from + 1).sum() - beacons.size;
   },
   "Part 2 (alternate)": (input, isSample) => {
     const reports = parse(input);
@@ -51,14 +55,14 @@ const parse = (input) => {
     .map((report) => {
       const [sx, sy, bx, by] = report.match(/-?\d+/g).map(Number);
       const d = Math.abs(by - sy) + Math.abs(bx - sx);
-      return {sx, sy, bx, by, d};
+      return { sx, sy, bx, by, d };
     });
 };
 
 const getRanges = (reports, y) => {
   return reports
-    .filter(({sy, d}) => (sy - d <= y && sy + d >= y))
-    .map(({sx, sy, d}) => {
+    .filter(({ sy, d }) => sy - d <= y && sy + d >= y)
+    .map(({ sx, sy, d }) => {
       const diff = Math.abs(y - sy);
       return [sx - d + diff, sx + d - diff];
     });
@@ -85,7 +89,7 @@ const splitRanges = (ranges) => {
 
 const getRangesMap = (reports, xLimits, yLimits) => {
   const rangesMap = {};
-  for (const {sx, sy, d} of reports) {
+  for (const { sx, sy, d } of reports) {
     for (let i = 0; i <= d; i++) {
       let x1 = sx - d + i;
       let x2 = sx + d - i;
@@ -140,7 +144,7 @@ const addRange = (rangesMap, y, x1, x2) => {
   }
 };
 
-Array.prototype.sum = function() {
+Array.prototype.sum = function () {
   return this.reduce((agg, num) => agg + num, 0);
 };
 
