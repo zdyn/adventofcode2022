@@ -1,3 +1,5 @@
+import "./utils.js";
+
 export const fns = {
   "Part 1": (input) => {
     return parse(input).reduce((agg, items) => {
@@ -34,25 +36,6 @@ const PRIORITY = "abcdefghijklmnopqrstuvwxyz"
     agg[char.toUpperCase()] = i + 27;
     return agg;
   }, {});
-
-Array.prototype.group = function (size) {
-  const groups = [];
-  for (let i = 0; i < this.length; i += size) {
-    groups.push(this.slice(i, i + size));
-  }
-  return groups;
-};
-
-Set.prototype.intersection = function (set) {
-  const [a, b] = this.size <= set.size ? [this, set] : [set, this];
-  const result = new Set();
-  for (const mem of a) {
-    if (b.has(mem)) {
-      result.add(mem);
-    }
-  }
-  return result;
-};
 
 export const samples = `vJrwpWtwJgWrhcsFMMfFFhFp
 jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL

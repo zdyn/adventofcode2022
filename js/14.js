@@ -1,3 +1,5 @@
+import "./utils.js";
+
 export const fns = {
   "Part 1": (input) => {
     const { occupied, maxY } = parse(input);
@@ -78,14 +80,6 @@ const parse = (input) => {
 };
 
 const key = (...args) => args.join(",");
-
-Array.prototype.group = function (size, step) {
-  const groups = [];
-  for (let i = 0; i <= this.length - size; i += step) {
-    groups.push(this.slice(i, i + size));
-  }
-  return groups;
-};
 
 export const samples = `498,4 -> 498,6 -> 496,6
 503,4 -> 502,4 -> 502,9 -> 494,9`;

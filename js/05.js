@@ -1,3 +1,5 @@
+import "./utils.js";
+
 export const fns = {
   "Part 1": (input) => {
     const { stacks, moves } = parse(input);
@@ -41,14 +43,6 @@ const parse = (input) => {
     moves.push({ from, to, count });
   }
   return { stacks, moves };
-};
-
-String.prototype.group = function (size) {
-  const groups = [];
-  for (let i = 0; i < this.length; i += size) {
-    groups.push(this.slice(i, i + size));
-  }
-  return groups;
 };
 
 export const samples = `    [D]

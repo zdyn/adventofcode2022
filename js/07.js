@@ -1,3 +1,5 @@
+import "./utils.js";
+
 export const fns = {
   "Part 1": (input) => {
     const root = parse(input);

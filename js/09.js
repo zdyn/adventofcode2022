@@ -1,3 +1,5 @@
+import "./utils.js";
+
 export const fns = {
   "Part 1": (input) => {
     const knots = [...Array(2)].map(() => [0, 0]);

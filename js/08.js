@@ -1,3 +1,5 @@
+import "./utils.js";
+
 export const fns = {
   "Part 1": (input) => {
     const grid = parse(input);
@@ -44,14 +46,6 @@ const getViews = (grid, i, j) => {
       .reverse(),
     grid.map((row) => row[j]).slice(i + 1),
   ];
-};
-
-Array.prototype.forMatrix = function (fn) {
-  for (let i = 0; i < this.length; i++) {
-    for (let j = 0; j < this[i].length; j++) {
-      fn(this[i][j], i, j);
-    }
-  }
 };
 
 export const samples = `30373

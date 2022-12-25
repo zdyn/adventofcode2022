@@ -1,3 +1,5 @@
+import "./utils.js";
+
 export const fns = {
   "Part 1": (input) => {
     return mix(input.trim().split("\n").map(Number), 1);

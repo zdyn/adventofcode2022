@@ -1,3 +1,5 @@
+import "./utils.js";
+
 export const fns = {
   "Part 1": (input) => {
     const parts = input.split("\n\n");
@@ -202,14 +204,6 @@ const move = (node, face, moves) => {
     }
   }
   return { node, face };
-};
-
-Array.prototype.forMatrix = function (fn) {
-  for (let i = 0; i < this.length; i++) {
-    for (let j = 0; j < this[i].length; j++) {
-      fn(this[i][j], i, j);
-    }
-  }
 };
 
 export const samples = `        ...#

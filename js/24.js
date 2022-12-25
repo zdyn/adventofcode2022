@@ -1,3 +1,5 @@
+import "./utils.js";
+
 export const fns = {
   "Part 1": (input) => {
     const grid = parse(input);
@@ -84,17 +86,6 @@ const possible = (grid, [x, y]) => {
       grid[i][j] === "."
     );
   });
-};
-
-Array.prototype.forMatrix = function (fn) {
-  for (let i = 0; i < this.length; i++) {
-    for (let j = 0; j < this[i].length; j++) {
-      fn(this[i][j], i, j);
-    }
-  }
-};
-Array.prototype.mapMatrix = function (fn) {
-  return this.map((row, i) => row.map((c, j) => fn(c, i, j)));
 };
 
 export const samples = `#.######

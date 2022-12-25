@@ -1,3 +1,5 @@
+import "./utils.js";
+
 export const fns = {
   "Part 1": (input) => {
     const monkeFns = {};
@@ -85,10 +87,6 @@ export const fns = {
       .slice(0, 2)
       .product();
   },
-};
-
-Array.prototype.product = function () {
-  return this.reduce((agg, num) => agg * num, 1);
 };
 
 export const samples = `Monkey 0:

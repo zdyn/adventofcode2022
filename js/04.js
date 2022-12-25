@@ -1,3 +1,5 @@
+import "./utils.js";
+
 export const fns = {
   "Part 1": (input) => {
     return parse(input).reduce((agg, [[f1, t1], [f2, t2]]) => {

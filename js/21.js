@@ -1,3 +1,5 @@
+import "./utils.js";
+
 export const fns = {
   "Part 1": (input) => eval(expand(parse(input), "root")),
   "Part 2": (input) => {

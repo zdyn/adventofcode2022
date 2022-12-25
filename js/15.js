@@ -1,3 +1,5 @@
+import "./utils.js";
+
 export const fns = {
   "Part 1": (input, isSample) => {
     const reports = parse(input);
@@ -142,10 +144,6 @@ const addRange = (rangesMap, y, x1, x2) => {
   } else {
     ranges.splice(i, 0, [x1, x2]);
   }
-};
-
-Array.prototype.sum = function () {
-  return this.reduce((agg, num) => agg + num, 0);
 };
 
 export const samples = `Sensor at x=2, y=18: closest beacon is at x=-2, y=15

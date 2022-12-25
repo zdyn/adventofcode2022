@@ -1,3 +1,5 @@
+import "./utils.js";
+
 export const fns = {
   "Part 1": (input) => {
     return parse(input)
@@ -38,14 +40,6 @@ const compare = (left, right) => {
     i++;
   }
   return i < right.length ? -1 : i < left.length ? 1 : 0;
-};
-
-Array.prototype.group = function (size) {
-  const groups = [];
-  for (let i = 0; i < this.length; i += size) {
-    groups.push(this.slice(i, i + size));
-  }
-  return groups;
 };
 
 export const samples = `[1,1,3,1,1]

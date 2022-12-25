@@ -1,37 +1,37 @@
+import "./utils.js";
+
 export const fns = {
   "Part 1": (input) => {
-    let fuel = input
+    return input
       .trim()
       .split("\n")
-      .map((req) => {
-        return req
-          .split("")
-          .reverse()
-          .reduce((agg, c, i) => {
-            return (
-              agg + Math.pow(5, i) * { 2: 2, 1: 1, 0: 0, "-": -1, "=": -2 }[c]
-            );
-          }, 0);
-      })
-      .reduce((agg, num) => agg + num, 0);
-    let snafu = "";
-    let mult = 1;
-    let exp = Math.floor(Math.log(fuel) / Math.log(5));
-    while (exp >= 0) {
-      const place = Math.pow(5, exp);
-      const rem = fuel % place;
-      let div = (fuel - rem) / place;
-      let max = 0;
-      for (let i = 0; i < exp; i++) {
-        max += Math.pow(5, i) * 2;
-      }
-      if (rem > max) div++;
-      snafu += { "-2": "=", "-1": "-", 0: 0, 1: 1, 2: 2 }[div * mult];
-      if (rem > max) mult *= -1;
-      fuel = Math.abs(fuel - div * place);
-      exp--;
-    }
-    return snafu;
+      .reduce((agg, snafu) => {
+        let next = "";
+        let carry = 0;
+        let i = 0;
+        while (carry !== 0 || i < Math.max(agg.length, snafu.length)) {
+          const aDigit = { "=": -2, "-": -1, 0: 0, 1: 1, 2: 2 }[
+            agg[agg.length - i - 1] || 0
+          ];
+          const sDigit = { "=": -2, "-": -1, 0: 0, 1: 1, 2: 2 }[
+            snafu[snafu.length - i - 1] || 0
+          ];
+          const sum = carry + aDigit + sDigit;
+          carry = 0;
+          if (sum % 5 > 2) {
+            next = { "-2": "=", "-1": "-" }[(sum % 5) - 5] + next;
+            carry = Math.floor(sum / 5) + 1;
+          } else if (sum % 5 < -2) {
+            next = (sum % 5) + 5 + next;
+            carry = Math.floor(sum / 5);
+          } else {
+            next = { "-2": "=", "-1": "-", 0: 0, 1: 1, 2: 2 }[sum % 5] + next;
+            carry = Math.floor((sum - sum % 5) / 5);
+          }
+          i++;
+        }
+        return next;
+      }, "");
   },
 };
 

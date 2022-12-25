@@ -1,3 +1,5 @@
+import "./utils.js";
+
 export const fns = {
   "Part 1": (input) => find(input.trim().split(""), 4),
   "Part 2": (input) => find(input.trim().split(""), 14),
