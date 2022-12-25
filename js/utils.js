@@ -47,4 +47,10 @@ String.prototype.group = function (size) {
   return groups;
 };
 
-export {};
+export const extractNumbers = (nums) => nums.match(/\-?\d+/g).map(Number);
+
+export const fkey = (k) => k.split(",").map(Number);
+
+export const key = (...args) => [].concat(args).join(",");
+
+export const parseGrid = (grid) => grid.split("\n").map((r) => r.split(""));

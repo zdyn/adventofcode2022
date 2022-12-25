@@ -1,4 +1,4 @@
-import "./utils.js";
+import { fkey, key } from "./utils.js";
 
 export const fns = {
   "Part 1": (input) => {
@@ -7,10 +7,10 @@ export const fns = {
     let sum = 0;
     for (const coord of coords) {
       sum += 6;
-      const k = key(...coord);
+      const k = key(coord);
       visited.add(k);
       for (const neighbor of neighbors(...coord)) {
-        if (visited.has(key(...neighbor))) sum -= 2;
+        if (visited.has(key(neighbor))) sum -= 2;
       }
     }
     return sum;
@@ -21,7 +21,7 @@ export const fns = {
     let min = Array(3).fill(Number.MAX_SAFE_INTEGER);
     let max = Array(3).fill(0);
     for (const coord of coords) {
-      cubes.add(key(...coord));
+      cubes.add(key(coord));
       coord.forEach((num, i) => {
         min[i] = Math.min(min[i], num);
         max[i] = Math.max(max[i], num);
@@ -29,7 +29,7 @@ export const fns = {
     }
     min = min.map((num) => num - 1);
     max = max.map((num) => num + 1);
-    const visited = new Set(key(...min));
+    const visited = new Set(key(min));
     let sum = 0;
     let queue = [min];
     while (queue.length > 0) {
@@ -38,7 +38,7 @@ export const fns = {
         for (const neighbor of neighbors(...coord)) {
           if (neighbor.some((num, i) => num < min[i] || num > max[i])) continue;
 
-          const k = key(...neighbor);
+          const k = key(neighbor);
           if (cubes.has(k)) {
             sum++;
           } else if (!visited.has(k)) {
@@ -57,10 +57,8 @@ const parse = (input) => {
   return input
     .trim()
     .split("\n")
-    .map((line) => line.split(",").map(Number));
+    .map(fkey);
 };
-
-const key = (...args) => args.join(",");
 
 const neighbors = (x, y, z) => {
   return [

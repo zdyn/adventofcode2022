@@ -11,6 +11,7 @@ export const fns = {
     );
     return ranges.map(([a, b]) => b - a + 1).sum() - beacons.size;
   },
+  // TODO: Speed up.
   "Part 2": (input, isSample) => {
     const reports = parse(input);
     const limit = isSample ? 20 : 4000000;

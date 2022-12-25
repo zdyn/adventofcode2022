@@ -1,4 +1,4 @@
-import "./utils.js";
+import { fkey, key } from "./utils.js";
 
 export const fns = {
   "Part 1": (input) => {
@@ -11,12 +11,13 @@ export const fns = {
     let min = [Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER];
     let max = [0, 0];
     for (const k of elves) {
-      const [x, y] = fromKey(k);
+      const [x, y] = fkey(k);
       min = [Math.min(min[0], x), Math.min(min[1], y)];
       max = [Math.max(max[0], x), Math.max(max[1], y)];
     }
     return (max[0] - min[0] + 1) * (max[1] - min[1] + 1) - elves.size;
   },
+  // TODO: Speed up.
   "Part 2": (input) => {
     const elves = parse(input);
     let dirs = "NSWE";
@@ -49,7 +50,7 @@ const move = (elves, dirs) => {
   const moves = {};
   let changed = false;
   for (const k of elves) {
-    const [x, y] = fromKey(k);
+    const [x, y] = fkey(k);
     if (!occupied(elves, neighbors(x, y))) continue;
 
     const checks = [
@@ -60,7 +61,7 @@ const move = (elves, dirs) => {
     ];
     for (const check of checks) {
       if (!occupied(elves, check)) {
-        const to = key(...check[1]);
+        const to = key(check[1]);
         moves[to] ??= [];
         moves[to].push(k);
         break;
@@ -76,10 +77,6 @@ const move = (elves, dirs) => {
   }
   return changed;
 };
-
-const key = (...args) => args.join(",");
-
-const fromKey = (k) => k.split(",").map(Number);
 
 const neighbors = (x, y, dir) => {
   switch (dir) {
@@ -122,7 +119,7 @@ const neighbors = (x, y, dir) => {
 };
 
 const occupied = (s, coords) => {
-  return coords.some((coord) => s.has(key(...coord)));
+  return coords.some((coord) => s.has(key(coord)));
 };
 
 export const samples = `....#..

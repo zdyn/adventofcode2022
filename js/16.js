@@ -23,9 +23,9 @@ export const fns = {
     };
     return dfs("AA", new Set(["AA"]), 30, 0);
   },
+  // TODO: Speed up.
   "Part 2": (input) => {
     const { valves, rates, tunnels, distances } = parse(input);
-    // TODO: Speed up.
     const dfs = ([from1, from2], visited, [time1, time2], released) => {
       const totals = [released];
       if (time1 >= time2) {

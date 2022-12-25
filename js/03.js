@@ -1,8 +1,8 @@
-import "./utils.js";
+import { parseGrid } from "./utils.js";
 
 export const fns = {
   "Part 1": (input) => {
-    return parse(input).reduce((agg, items) => {
+    return parseGrid(input.trim()).reduce((agg, items) => {
       const set = items
         .group(items.length / 2)
         .map((items) => new Set(items))
@@ -11,7 +11,7 @@ export const fns = {
     }, 0);
   },
   "Part 2": (input) => {
-    return parse(input)
+    return parseGrid(input.trim())
       .group(3)
       .reduce((agg, group) => {
         const set = group
@@ -20,13 +20,6 @@ export const fns = {
         return agg + PRIORITY[[...set][0]];
       }, 0);
   },
-};
-
-const parse = (input) => {
-  return input
-    .trim()
-    .split("\n")
-    .map((items) => items.split(""));
 };
 
 const PRIORITY = "abcdefghijklmnopqrstuvwxyz"

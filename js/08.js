@@ -1,8 +1,8 @@
-import "./utils.js";
+import { parseGrid } from "./utils.js";
 
 export const fns = {
   "Part 1": (input) => {
-    const grid = parse(input);
+    const grid = parseGrid(input.trim()).mapMatrix(Number);
     let result = 0;
     grid.forMatrix((tree, i, j) => {
       const views = getViews(grid, i, j);
@@ -13,7 +13,7 @@ export const fns = {
     return result;
   },
   "Part 2": (input) => {
-    const grid = parse(input);
+    const grid = parseGrid(input.trim()).mapMatrix(Number);
     let result = 0;
     grid.forMatrix((tree, i, j) => {
       const views = getViews(grid, i, j);
@@ -27,13 +27,6 @@ export const fns = {
     });
     return result;
   },
-};
-
-const parse = (input) => {
-  return input
-    .trim()
-    .split("\n")
-    .map((line) => line.split("").map(Number));
 };
 
 const getViews = (grid, i, j) => {

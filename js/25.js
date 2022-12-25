@@ -26,7 +26,7 @@ export const fns = {
             carry = Math.floor(sum / 5);
           } else {
             next = { "-2": "=", "-1": "-", 0: 0, 1: 1, 2: 2 }[sum % 5] + next;
-            carry = Math.floor((sum - sum % 5) / 5);
+            carry = Math.floor((sum - (sum % 5)) / 5);
           }
           i++;
         }

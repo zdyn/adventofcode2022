@@ -1,8 +1,8 @@
-import "./utils.js";
+import { key, parseGrid } from "./utils.js";
 
 export const fns = {
   "Part 1": (input) => {
-    const grid = parse(input);
+    const grid = parseGrid(input.trim());
     let endCoords;
     grid.forMatrix((elevation, i, j) => {
       if (elevation === "E") {
@@ -13,7 +13,7 @@ export const fns = {
     return distance(grid, endCoords, "S");
   },
   "Part 2": (input) => {
-    const grid = parse(input);
+    const grid = parseGrid(input.trim());
     let endCoords;
     grid.forMatrix((elevation, i, j) => {
       if (elevation === "S") {
@@ -26,13 +26,6 @@ export const fns = {
   },
 };
 
-const parse = (input) => {
-  return input
-    .trim()
-    .split("\n")
-    .map((row) => row.split(""));
-};
-
 const HEIGHTS = "abcdefghijklmnopqrstuvwxyz".split("").reduce(
   (agg, letter, i) => {
     agg[letter] = i;
@@ -42,8 +35,7 @@ const HEIGHTS = "abcdefghijklmnopqrstuvwxyz".split("").reduce(
 );
 
 const distance = (grid, fromCoords, to) => {
-  const key = (...args) => args.join(",");
-  const distances = { [key(...fromCoords)]: 0 };
+  const distances = { [key(fromCoords)]: 0 };
   let queue = [fromCoords];
   while (queue.length > 0) {
     const next = [];

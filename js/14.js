@@ -1,4 +1,4 @@
-import "./utils.js";
+import { fkey, key } from "./utils.js";
 
 export const fns = {
   "Part 1": (input) => {
@@ -17,7 +17,7 @@ export const fns = {
           sand[1]++;
         } else {
           result++;
-          occupied.add(key(...sand));
+          occupied.add(key(sand));
           break;
         }
         if (sand[1] >= maxY) return result;
@@ -62,7 +62,7 @@ const parse = (input) => {
     .forEach((line) => {
       line
         .split(" -> ")
-        .map((c) => c.split(",").map(Number))
+        .map(fkey)
         .group(2, 1)
         .forEach(([[x1, y1], [x2, y2]]) => {
           if (x1 > x2 || y1 > y2) {
@@ -78,8 +78,6 @@ const parse = (input) => {
     });
   return { occupied, maxY };
 };
-
-const key = (...args) => args.join(",");
 
 export const samples = `498,4 -> 498,6 -> 496,6
 503,4 -> 502,4 -> 502,9 -> 494,9`;
