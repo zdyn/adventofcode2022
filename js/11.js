@@ -1,4 +1,4 @@
-import "./utils.js";
+import { extractNumbers } from "./utils.js";
 
 export const fns = {
   "Part 1": (input) => {
@@ -6,7 +6,7 @@ export const fns = {
     const monkes = [];
     input.split("\n\n").forEach((monke, i) => {
       const lines = monke.split("\n").map((s) => s.trim());
-      const items = lines[1].match(/\d+/g).map(Number);
+      const items = extractNumbers(lines[1]);
       const [operation, operand] = lines[2].split(" ").slice(4);
       const operationFn = (old) => {
         if (operation === "+") {
@@ -15,9 +15,9 @@ export const fns = {
           return old * (operand === "old" ? old : Number(operand));
         }
       };
-      const divisor = Number(lines[3].match(/\d+/)[0]);
-      const t = Number(lines[4].match(/\d+/)[0]);
-      const f = Number(lines[5].match(/\d+/)[0]);
+      const divisor = extractNumbers(lines[3])[0];
+      const t = extractNumbers(lines[4])[0];
+      const f = extractNumbers(lines[5])[0];
       const testFn = (old) => (old % divisor === 0 ? t : f);
       monkeFns[i] = { operationFn, testFn };
       monkes.push({
@@ -49,7 +49,7 @@ export const fns = {
     let lcm = 1;
     input.split("\n\n").forEach((monke, i) => {
       const lines = monke.split("\n").map((s) => s.trim());
-      const items = lines[1].match(/\d+/g).map(Number);
+      const items = extractNumbers(lines[1]);
       const [operation, operand] = lines[2].split(" ").slice(4);
       const operationFn = (old) => {
         if (operation === "+") {
@@ -58,9 +58,9 @@ export const fns = {
           return old * (operand === "old" ? old : Number(operand));
         }
       };
-      const divisor = Number(lines[3].match(/\d+/)[0]);
-      const t = Number(lines[4].match(/\d+/)[0]);
-      const f = Number(lines[5].match(/\d+/)[0]);
+      const divisor = extractNumbers(lines[3])[0];
+      const t = extractNumbers(lines[4])[0];
+      const f = extractNumbers(lines[5])[0];
       const testFn = (old) => (old % divisor === 0 ? t : f);
       lcm *= divisor;
       monkeFns[i] = { operationFn, testFn };

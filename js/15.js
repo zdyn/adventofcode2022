@@ -1,4 +1,4 @@
-import "./utils.js";
+import { extractNumbers } from "./utils.js";
 
 export const fns = {
   "Part 1": (input, isSample) => {
@@ -56,7 +56,7 @@ const parse = (input) => {
     .trim()
     .split("\n")
     .map((report) => {
-      const [sx, sy, bx, by] = report.match(/-?\d+/g).map(Number);
+      const [sx, sy, bx, by] = extractNumbers(report);
       const d = Math.abs(by - sy) + Math.abs(bx - sx);
       return { sx, sy, bx, by, d };
     });

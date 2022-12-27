@@ -34,7 +34,7 @@ export const fns = {
       .map((position, i) => {
         return (
           (i % 40 === 0 ? "\n" : "") +
-          (position - 1 <= i % 40 && position + 1 >= i % 40 ? "#" : ".")
+          (position - 1 <= i % 40 && position + 1 >= i % 40 ? "#" : " ")
         );
       })
       .join("");

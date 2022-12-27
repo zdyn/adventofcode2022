@@ -53,12 +53,7 @@ export const fns = {
   },
 };
 
-const parse = (input) => {
-  return input
-    .trim()
-    .split("\n")
-    .map(fkey);
-};
+const parse = (input) => input.trim().split("\n").map(fkey);
 
 const neighbors = (x, y, z) => {
   return [

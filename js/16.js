@@ -1,4 +1,4 @@
-import "./utils.js";
+import { extractNumbers } from "./utils.js";
 
 export const fns = {
   "Part 1": (input) => {
@@ -75,7 +75,7 @@ const parse = (input) => {
     .split("\n")
     .forEach((line) => {
       const [from, ...to] = line.match(/[A-Z]{2}/g);
-      const rate = Number(line.match(/\d+/)[0]);
+      const rate = extractNumbers(line)[0];
       if (rate > 0) {
         rates[from] = rate;
         valves.push(from);

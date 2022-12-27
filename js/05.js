@@ -1,4 +1,4 @@
-import "./utils.js";
+import { extractNumbers } from "./utils.js";
 
 export const fns = {
   "Part 1": (input) => {
@@ -39,7 +39,7 @@ const parse = (input) => {
       });
   }
   for (const line of parts[1].trim().split("\n")) {
-    const [count, from, to] = line.match(/\d+/g).map(Number);
+    const [count, from, to] = extractNumbers(line);
     moves.push({ from, to, count });
   }
   return { stacks, moves };

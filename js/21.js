@@ -1,4 +1,4 @@
-import "./utils.js";
+import { extractNumbers } from "./utils.js";
 
 export const fns = {
   "Part 1": (input) => eval(expand(parse(input), "root")),
